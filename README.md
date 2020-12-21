@@ -1,4 +1,11 @@
-# Getting Started with Create React App
+
+# Spotify App
+
+* Register your application at following [this](https://developer.spotify.com/documentation/general/guides/app-settings/#register-your-app) guide.
+* Add your website redirect uri and your website url to the registered application.
+
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
