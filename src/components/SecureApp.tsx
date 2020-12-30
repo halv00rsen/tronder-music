@@ -13,6 +13,7 @@ const Menu = styled.div`
 const Content = styled.div`
   overflow: auto;
   width: 100%;
+  padding-bottom: 70px;
 `;
 
 export const SecureApp = () => {
