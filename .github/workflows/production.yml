@@ -29,10 +29,20 @@ jobs:
           REACT_APP_SPOTIFY_CLIENT_ID: ${{ secrets.REACT_APP_SPOTIFY_CLIENT_ID }}
           REACT_APP_SPOTIFY_REDIRECT_URI: ${{ secrets.REACT_APP_SPOTIFY_REDIRECT_URI }}
           REACT_APP_CLIENT_VERSION: ${{ steps.vars.outputs.CLIENT_VERSION }}
-      - name: Deploy to S3
+      - name: Deploy files to S3 with cache
         uses: jakejarvis/s3-sync-action@master
         with:
-          args: --acl public-read --delete
+          args: --acl public-read --delete --cache-control 'max-age=604800' --exclude "index.html"
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: 'build'
+      - name: Deploy index.html to S3 without cache
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --cache-control 'no-cache' --include "index.html"
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_PRODUCTION_BUCKET_NAME }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
