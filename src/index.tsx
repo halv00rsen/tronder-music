@@ -4,6 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const clientVersion = process.env.REACT_APP_CLIENT_VERSION;
+
+console.log(`Client version: ${clientVersion}`);
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

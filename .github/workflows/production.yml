@@ -1,4 +1,4 @@
-name: Production Build
+name: Spotify Production Build
 on:
   pull_request:
   push:
@@ -8,25 +8,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup environment variables
+        id: vars
+        run: |
+          echo "::set-output name=CLIENT_VERSION::${GITHUB_SHA::8}-$(date +'%Y-%m-%dT%H:%M:%S')"
+      - name: Setup NodeJs 12.x
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 12.x
       - name: Npm Install
         run: |
           npm install
       - name: Production Build
         run: |
+          echo "Client version: ${REACT_APP_CLIENT_VERSION}"
           npm run build
         env:
           REACT_APP_SPOTIFY_CLIENT_ID: ${{ secrets.REACT_APP_SPOTIFY_CLIENT_ID }}
           REACT_APP_SPOTIFY_REDIRECT_URI: ${{ secrets.REACT_APP_SPOTIFY_REDIRECT_URI }}
+          REACT_APP_CLIENT_VERSION: ${{ steps.vars.outputs.CLIENT_VERSION }}
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
