@@ -9,15 +9,15 @@ export const MyAlbums = () => {
 
   useEffect(() => {
     const loadAlbums = async () => {
-      setFetching(true);
       const response = await instance.getMySavedAlbums();
-      setFetching(false);
       dispatch({
         type: 'set-saved-albums',
         albums: response.items,
       });
+      setFetching(false);
     };
     if (!savedAlbums.length && !fetching) {
+      setFetching(true);
       loadAlbums();
     }
   }, [dispatch, instance, savedAlbums, fetching]);
