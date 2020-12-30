@@ -8,7 +8,7 @@ import { useIsSmallScreen } from '../useScreenSize';
 const padding = '10px';
 
 const Menu = styled.div`
-  min-width: 150px;
+  min-width: 200px;
 
   & > * + * {
     border-top: 2px solid black;
@@ -95,7 +95,7 @@ const MobileMenu = () => {
   return (
     <ActiveMobileMenu>
       <Header>
-        Spotify <Button onClick={toggleMenu}>Open Menu</Button>
+        Trønder Music <Button onClick={toggleMenu}>Open Menu</Button>
       </Header>
       {showMenu && <Links />}
     </ActiveMobileMenu>
@@ -110,7 +110,7 @@ export const SpotifyMenu = () => {
   }
   return (
     <Menu>
-      <Header>Spotify</Header>
+      <Header>Trønder Music</Header>
       <Links />
     </Menu>
   );

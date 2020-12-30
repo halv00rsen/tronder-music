@@ -71,7 +71,7 @@ export const Login = () => {
   }
   return (
     <LoginUI>
-      <h1>Spotify Trønder</h1>
+      <h1>Trønder Music</h1>
       <div>To use this application, please login into Spotify.</div>
       <i>You will be redirected to Spotify login page.</i>
       <ButtonRow>
