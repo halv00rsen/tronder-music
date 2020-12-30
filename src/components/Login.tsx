@@ -77,6 +77,7 @@ export const Login = () => {
       <ButtonRow>
         <Button onClick={redirectToSpotifyLogin}>Login to Spotify</Button>
       </ButtonRow>
+      <i>Info</i>
     </LoginUI>
   );
 };
