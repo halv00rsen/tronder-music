@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAppDispatch } from '../../../context/app';
 import { useStrictSpotifyState } from '../../../context/spotify';
+import { removePersistedState } from '../../../service/spotify';
 
 interface Props {
   name: string;
@@ -21,6 +22,7 @@ export const ProfileView = () => {
 
   const removeActiveSession = () => {
     instance.setAccessToken(null);
+    removePersistedState();
     dispatch({
       type: 'reset-credentials',
     });

@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { getPersistedAccessToken } from '../service/spotify';
 import { createStore } from './state';
 
 interface SetCredentialsAction {
@@ -46,7 +48,29 @@ export const useAppState = store.useState;
 
 export const useAppDispatch = store.useDispatch;
 
-export const useLoggedInSelector = (): boolean => {
+type LoggedIn = 'pending' | 'loggedIn' | 'notLoggedIn';
+
+export const useLoggedInSelector = (): LoggedIn => {
+  const [loggedIn, setLoggedIn] = useState<LoggedIn>('pending');
+  const dispatch = store.useDispatch();
   const state = store.useState();
-  return !!state.accessToken;
+
+  useEffect(() => {
+    const hasAccessTokenInStore = !!state.accessToken;
+    if (hasAccessTokenInStore) {
+      setLoggedIn('loggedIn');
+    } else {
+      const persistedToken = getPersistedAccessToken();
+      if (persistedToken && new Date(persistedToken.expireTime) > new Date()) {
+        dispatch({
+          type: 'set-credentials',
+          accessToken: persistedToken.accessToken,
+        });
+      } else {
+        setLoggedIn('notLoggedIn');
+      }
+    }
+  }, [state.accessToken, dispatch]);
+
+  return loggedIn;
 };

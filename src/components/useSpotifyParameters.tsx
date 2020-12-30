@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { persistAccessToken } from '../service/spotify';
 
 interface Params {
   [key: string]: string | undefined;
@@ -50,12 +51,15 @@ export const useSpotifyParameters = () => {
         fragments['token_type'] &&
         fragments['state']
       ) {
-        setSpotifyInfo({
+        const token = {
           accessToken: fragments['access_token'],
           expiresIn: fragments['expires_in'],
           tokenType: fragments['token_type'],
           state: fragments['state'],
-        });
+        };
+        const invalid = new Date().getTime() + Number(token.expiresIn) * 1000;
+        persistAccessToken(token.accessToken, invalid);
+        setSpotifyInfo(token);
         return;
       }
     }

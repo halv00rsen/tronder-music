@@ -4,6 +4,35 @@ import { useAppDispatch, useLoggedInSelector } from '../context/app';
 import { redirectToSpotifyLogin } from '../service/spotify';
 import { getSpotifyState } from '../service/storage';
 import { useSpotifyParameters } from './useSpotifyParameters';
+import styled from 'styled-components';
+import { mainColor } from '../utils/constants';
+
+const LoginUI = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+`;
+
+const Button = styled.button`
+  padding: 15px;
+  background-color: #3b3434;
+  text-decoration: none;
+  border: 3px solid black;
+  cursor: pointer;
+  transition: 0.4s;
+  color: ${mainColor};
+  font-size: 150%;
+  font-weight: 500;
+
+  &:hover {
+    opacity: 0.5;
+  }
+`;
+
+const ButtonRow = styled.div`
+  margin: 1em;
+`;
 
 export const Login = () => {
   const [stateError, setStateError] = useState(false);
@@ -30,7 +59,7 @@ export const Login = () => {
     }
   }, [spotifyParameters, appDispatch]);
 
-  if (loggedIn) {
+  if (loggedIn === 'loggedIn') {
     return <Redirect to="/" />;
   } else if (stateError) {
     return (
@@ -41,9 +70,13 @@ export const Login = () => {
     );
   }
   return (
-    <div>
-      <h4>Please log into Spotify to use this application</h4>
-      <button onClick={redirectToSpotifyLogin}>Login</button>
-    </div>
+    <LoginUI>
+      <h1>Spotify Trønder</h1>
+      <div>To use this application, please login into Spotify.</div>
+      <i>You will be redirected to Spotify login page.</i>
+      <ButtonRow>
+        <Button onClick={redirectToSpotifyLogin}>Login to Spotify</Button>
+      </ButtonRow>
+    </LoginUI>
   );
 };

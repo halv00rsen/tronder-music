@@ -17,10 +17,7 @@ export const setInvalidTime = (time: number) => {
 
 export const getInvalidTime = () => {
   const time = sessionStorage.getItem(storageSpotifyInvalidateTime);
-  if (time) {
-    return new Date(Number(time));
-  }
-  return new Date();
+  return (time && Number(time)) || undefined;
 };
 
 export const setTokenType = (tokenType?: string) => {
