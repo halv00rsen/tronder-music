@@ -3,6 +3,7 @@ import { MyAlbums } from '../components/secure/MyAlbums';
 import { PlaylistView } from '../components/secure/view/PlaylistView';
 import { ProfileView } from '../components/secure/view/ProfileView';
 import { SingleAlbumRouteView } from '../components/secure/view/SingleAlbumRouteView';
+import { TronderView } from '../components/secure/view/TronderView';
 
 interface View {
   path: string;
@@ -25,6 +26,12 @@ const HOME_VIEW: MenuView = {
   exact: true,
 } as const;
 
+const TRONDER_VIEW: MenuView = {
+  friendlyName: 'Trønder',
+  path: '/tronder',
+  component: <TronderView />,
+} as const;
+
 const MY_ALBUMS_VIEW: MenuView = {
   friendlyName: 'My Albums',
   path: '/myalbums',
@@ -45,6 +52,7 @@ const MY_PLAYLISTS_VIEW: MenuView = {
 
 export const MENU_VIEWS = [
   HOME_VIEW,
+  TRONDER_VIEW,
   MY_ALBUMS_VIEW,
   PROFILE_VIEW,
   MY_PLAYLISTS_VIEW,

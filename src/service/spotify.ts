@@ -15,6 +15,7 @@ const scope = `scope=${[
   'user-library-read',
   'user-read-email',
   'user-read-private',
+  'user-read-recently-played',
 ].join(' ')}`;
 const showDialog = 'show_dialog=true';
 
