@@ -2,6 +2,16 @@ import React from 'react';
 import { useAppDispatch } from '../../../context/app';
 import { useStrictSpotifyState } from '../../../context/spotify';
 import { removePersistedState } from '../../../service/spotify';
+import styled from 'styled-components';
+import { Button } from '../../ui/Button';
+
+const ProfileUI = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: space-evenly;
+`;
 
 interface Props {
   name: string;
@@ -29,13 +39,13 @@ export const ProfileView = () => {
   };
 
   return (
-    <div>
+    <ProfileUI>
       <KeyValue name="Username" value={profile.id} />
       <KeyValue name="Country" value={profile.country} />
       <KeyValue name="Email" value={profile.email} />
       <KeyValue name="Membership" value={profile.product} />
       <KeyValue name="Followers" value={`${profile.followers?.total || 0}`} />
-      <button onClick={removeActiveSession}>Logout</button>
-    </div>
+      <Button onClick={removeActiveSession}>Logout</Button>
+    </ProfileUI>
   );
 };

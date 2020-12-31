@@ -5,29 +5,13 @@ import { redirectToSpotifyLogin } from '../service/spotify';
 import { getSpotifyState } from '../service/storage';
 import { useSpotifyParameters } from './useSpotifyParameters';
 import styled from 'styled-components';
-import { mainColor } from '../utils/constants';
+import { Button } from './ui/Button';
 
 const LoginUI = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: auto;
-`;
-
-const Button = styled.button`
-  padding: 15px;
-  background-color: #3b3434;
-  text-decoration: none;
-  border: 3px solid black;
-  cursor: pointer;
-  transition: 0.4s;
-  color: ${mainColor};
-  font-size: 150%;
-  font-weight: 500;
-
-  &:hover {
-    opacity: 0.5;
-  }
 `;
 
 const ButtonRow = styled.div`

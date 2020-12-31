@@ -9,6 +9,8 @@ const Bottom = styled.div`
   border-left: 1px solid black;
   padding: 5px;
   font-size: 70%;
+  color: black;
+  background-color: gray;
 `;
 
 const clientVersion = process.env.REACT_APP_CLIENT_VERSION;

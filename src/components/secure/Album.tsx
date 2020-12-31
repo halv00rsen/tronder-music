@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { mainHover } from '../../utils/constants';
+import { SpotifyLink } from '../SpotifyLink';
 
 const AlbumUI = styled.div`
   transition: 0.4s;
@@ -11,8 +13,12 @@ const AlbumUI = styled.div`
   display: flex;
 
   &:hover {
-    background-color: #e2e2e2;
+    background-color: ${mainHover};
   }
+`;
+
+const AlbumImage = styled.img`
+  cursor: pointer;
 `;
 
 const AlbumInfoUI = styled.div`
@@ -28,8 +34,9 @@ export const Album = ({ album }: Props) => {
 
   const [, , smallImage] = album.images;
   return (
-    <AlbumUI onClick={() => history.push(`/album/${album.id}`)}>
-      <img
+    <AlbumUI>
+      <AlbumImage
+        onClick={() => history.push(`/album/${album.id}`)}
         src={smallImage.url}
         height={smallImage.height}
         width={smallImage.width}
@@ -39,6 +46,7 @@ export const Album = ({ album }: Props) => {
         <div>
           <i>{album.artists.map((artist) => artist.name).join(', ')}</i>
         </div>
+        <SpotifyLink externalUrls={album.external_urls} />
       </AlbumInfoUI>
     </AlbumUI>
   );

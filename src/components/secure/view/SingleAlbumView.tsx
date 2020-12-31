@@ -3,6 +3,8 @@ import { useSpotifyState } from '../../../context/spotify';
 import styled from 'styled-components';
 import { getTrackDuration } from '../../../utils/time';
 import { mainHover } from '../../../utils/constants';
+import { SpotifyLink } from '../../SpotifyLink';
+import { ArtistList } from '../ArtistList';
 
 const Header = styled.div`
   padding: 1em;
@@ -21,6 +23,10 @@ const Track = styled.div`
   &:hover {
     background-color: ${mainHover};
   }
+`;
+
+const TrackMeta = styled.div`
+  display: flex;
 `;
 
 interface Props {
@@ -47,6 +53,7 @@ export const SingleAlbumView = ({ albumId }: Props) => {
     return (
       <div>
         <h2>{album.name}</h2>
+        <ArtistList artists={album.artists} />
         <Header>
           <img
             src={mediumImage.url}
@@ -54,6 +61,10 @@ export const SingleAlbumView = ({ albumId }: Props) => {
             width={mediumImage.width}
           />
         </Header>
+        <SpotifyLink
+          externalUrls={album.external_urls}
+          customText="View album on Spotify"
+        />
         <TrackHeader>Tracks</TrackHeader>
         {album.tracks.items.map((track) => {
           return (
@@ -61,7 +72,13 @@ export const SingleAlbumView = ({ albumId }: Props) => {
               <span>
                 {track.track_number}. {track.name}
               </span>
-              <span>{getTrackDuration(track.duration_ms)}</span>
+              <TrackMeta>
+                <span>{getTrackDuration(track.duration_ms)}</span>
+                <SpotifyLink
+                  externalUrls={track.external_urls}
+                  customText="Listen on Spotify"
+                />
+              </TrackMeta>
             </Track>
           );
         })}

@@ -24,7 +24,6 @@ export const MyAlbums = () => {
 
   return (
     <div>
-      <h4>My albums</h4>
       {fetching
         ? 'Loading albums...'
         : savedAlbums.map((album) => {

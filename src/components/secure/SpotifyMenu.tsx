@@ -31,7 +31,7 @@ const ActiveMobileMenu = styled.div`
   width: 100%;
 `;
 
-const Header = styled.div`
+export const Header = styled.div`
   padding: ${padding};
   font-size: 150%;
   font-weight: 600;
