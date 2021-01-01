@@ -1,4 +1,4 @@
-name: Spotify Production Build
+name: Trønder Music Production Build
 on:
   pull_request:
   push:
