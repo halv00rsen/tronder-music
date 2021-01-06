@@ -20,6 +20,7 @@ const tronderArtists = [
   'bjarne brøndbo',
   'terje tysland',
   "travellin' strawberries",
+  'the kids',
 ];
 
 const isTronderTrack = (track: SpotifyApi.PlayHistoryObject): boolean => {
