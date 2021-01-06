@@ -21,6 +21,31 @@ const tronderArtists = [
   'terje tysland',
   "travellin' strawberries",
   'the kids',
+  'tnt',
+  'dumdum boys',
+  'astrid s',
+  'astrid smedplass',
+  'vømmøl',
+  'chand torsvik',
+  'nordans',
+  'gluntan',
+  'too far gone',
+  'guttelim',
+  'hærmætti tysland band',
+  'sie gubba',
+  'highliners',
+  'askil holm',
+  'thomas brøndbo',
+  'arve tellefsen',
+  'dag ingebrigsten',
+  'prudence',
+  'knutsen & ludvigsen',
+  'leidulf hafsmo',
+  'otto nielsen',
+  'alf skille',
+  'four jets',
+  'paul okkenhaug',
+  'sjuende far i huset',
 ];
 
 const isTronderTrack = (track: SpotifyApi.PlayHistoryObject): boolean => {
@@ -44,10 +69,6 @@ const uniq = (tracks: SpotifyApi.PlayHistoryObject[]) => {
 
 export const TronderView = () => {
   const { instance } = useSpotifyState();
-
-  // const [tracks, setTracks] = useState<
-  //   SpotifyApi.UsersRecentlyPlayedTracksResponse | undefined
-  // >(undefined);
 
   const [tracks, setTracks] = useState<SpotifyApi.PlayHistoryObject[]>([]);
 
