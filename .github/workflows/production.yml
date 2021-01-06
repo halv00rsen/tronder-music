@@ -30,6 +30,7 @@ jobs:
           REACT_APP_SPOTIFY_REDIRECT_URI: ${{ secrets.REACT_APP_SPOTIFY_REDIRECT_URI }}
           REACT_APP_CLIENT_VERSION: ${{ steps.vars.outputs.CLIENT_VERSION }}
       - name: Deploy files to S3 with cache
+        if: ${{ github.event_name == 'push' }}
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --delete --cache-control 'max-age=604800' --exclude "index.html"
@@ -40,6 +41,7 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SOURCE_DIR: 'build'
       - name: Deploy index.html to S3 without cache
+        if: ${{ github.event_name == 'push' }}
         uses: jakejarvis/s3-sync-action@master
         with:
           args: --cache-control 'no-cache' --include "index.html"
