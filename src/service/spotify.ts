@@ -16,6 +16,7 @@ const scope = `scope=${[
   'user-read-email',
   'user-read-private',
   'user-read-recently-played',
+  'playlist-read-private',
 ].join(' ')}`;
 const showDialog = 'show_dialog=true';
 
@@ -67,4 +68,10 @@ export const getSpotifyAlbums = async () => {
     },
   });
   return await response.json();
+};
+
+export const isTrackObject = (
+  track: SpotifyApi.TrackObjectFull | SpotifyApi.EpisodeObjectFull
+): track is SpotifyApi.TrackObjectFull => {
+  return !!(track as SpotifyApi.TrackObjectFull).artists;
 };

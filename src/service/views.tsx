@@ -45,7 +45,7 @@ const PROFILE_VIEW: MenuView = {
 } as const;
 
 const MY_PLAYLISTS_VIEW: MenuView = {
-  friendlyName: 'Playlists',
+  friendlyName: 'Your Playlists',
   path: '/playlists',
   component: <PlaylistView />,
 } as const;
