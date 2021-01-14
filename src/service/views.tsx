@@ -1,5 +1,6 @@
 import React from 'react';
 import { MyAlbums } from '../components/secure/MyAlbums';
+import { HomeView } from '../components/secure/view/HomeView';
 import { PlaylistView } from '../components/secure/view/PlaylistView';
 import { ProfileView } from '../components/secure/view/ProfileView';
 import { SingleAlbumRouteView } from '../components/secure/view/SingleAlbumRouteView';
@@ -22,7 +23,7 @@ interface ParamView<T> extends View {
 const HOME_VIEW: MenuView = {
   friendlyName: 'Home',
   path: '/',
-  component: <div>Welcome to spotify app</div>,
+  component: <HomeView />,
   exact: true,
 } as const;
 

@@ -35,10 +35,12 @@ const TronderDisplayer = ({ playlist }: DisplayProps) => {
   const [tronderTracks, setTronderTracks] = useState<
     SpotifyApi.TrackObjectFull[] | undefined
   >(undefined);
+  const [loadingTracks, setLoadingTracks] = useState(false);
 
   const loadPlaylistTracks = async () => {
     const maxLimit = 1400;
     const total = playlist.tracks.total;
+
     const loadTracks = async (offset: number) => {
       const tracks = await instance.getPlaylistTracks(playlist.id, {
         offset: offset,
@@ -47,6 +49,7 @@ const TronderDisplayer = ({ playlist }: DisplayProps) => {
       return tracks.items;
     };
     const tracks: SpotifyApi.TrackObjectFull[] = [];
+    setLoadingTracks(true);
     for (
       let offset = playlist.tracks.offset;
       offset < Math.min(maxLimit, total);
@@ -60,6 +63,7 @@ const TronderDisplayer = ({ playlist }: DisplayProps) => {
           .filter(isTronderTrack)
       );
     }
+    setLoadingTracks(false);
     setTronderTracks(uniq(tracks));
   };
 
@@ -69,14 +73,17 @@ const TronderDisplayer = ({ playlist }: DisplayProps) => {
         <b>{playlist.name}</b>
       </div>
       <div>{playlist.description}</div>
-      {tronderTracks === undefined ? (
+      {loadingTracks ? (
+        <Loading loadingMessage="Loading and analyzing your playlist" />
+      ) : tronderTracks === undefined ? (
         <button onClick={loadPlaylistTracks}>Check content</button>
       ) : (
         <div>
           <div>
-            You have {tronderTracks.length} Trønder songs in this playlist
+            You have {tronderTracks.length} Trønder songs in this playlist.
           </div>
-          Your Tronder Tracks:
+
+          {tronderTracks.length !== 0 && <div>Your Tronder Tracks:</div>}
           {tronderTracks.map((track) => {
             return (
               <Track key={track.id}>
