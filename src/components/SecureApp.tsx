@@ -23,7 +23,11 @@ export const SecureApp = () => {
   const loggedIn = useLoggedInSelector();
   const { accessToken } = useAppState();
 
-  if (loggedIn === 'notLoggedIn' || !accessToken) {
+  if (
+    loggedIn === 'notLoggedIn' ||
+    loggedIn === 'expireToken' ||
+    !accessToken
+  ) {
     return <Redirect to="/login" />;
   }
   return (

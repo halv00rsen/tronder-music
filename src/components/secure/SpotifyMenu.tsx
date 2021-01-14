@@ -72,6 +72,7 @@ const Links = () => {
           key={view.path}
           chosen={location.pathname === view.path}
           onClick={() => redirect(view.path)}
+          role="button"
         >
           {view.friendlyName}
         </MenuLink>

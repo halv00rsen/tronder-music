@@ -35,6 +35,7 @@ interface SpotifyParams {
   expiresIn: string;
   tokenType: string;
   state: string;
+  expireTime: number;
 }
 
 export const useSpotifyParameters = () => {
@@ -59,7 +60,10 @@ export const useSpotifyParameters = () => {
         };
         const invalid = new Date().getTime() + Number(token.expiresIn) * 1000;
         persistAccessToken(token.accessToken, invalid);
-        setSpotifyInfo(token);
+        setSpotifyInfo({
+          ...token,
+          expireTime: invalid,
+        });
         return;
       }
     }

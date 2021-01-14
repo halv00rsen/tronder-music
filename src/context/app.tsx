@@ -5,6 +5,7 @@ import { createStore } from './state';
 interface SetCredentialsAction {
   type: 'set-credentials';
   accessToken: string;
+  invalidationTime: number;
 }
 interface ResetCredentialsAction {
   type: 'reset-credentials';
@@ -13,6 +14,7 @@ interface ResetCredentialsAction {
 type Action = SetCredentialsAction | ResetCredentialsAction;
 type State = {
   accessToken?: string;
+  invalidationTime?: number;
 };
 
 const initialState: State = {};
@@ -23,12 +25,14 @@ const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         accessToken: action.accessToken,
+        invalidationTime: action.invalidationTime,
       };
     }
     case 'reset-credentials': {
       return {
         ...state,
         accessToken: undefined,
+        invalidationTime: undefined,
       };
     }
     default: {
@@ -48,15 +52,15 @@ export const useAppState = store.useState;
 
 export const useAppDispatch = store.useDispatch;
 
-type LoggedIn = 'pending' | 'loggedIn' | 'notLoggedIn';
+type LoggedIn = 'pending' | 'loggedIn' | 'notLoggedIn' | 'expireToken';
 
 export const useLoggedInSelector = (): LoggedIn => {
   const [loggedIn, setLoggedIn] = useState<LoggedIn>('pending');
   const dispatch = store.useDispatch();
-  const state = store.useState();
+  const { accessToken, invalidationTime } = store.useState();
 
   useEffect(() => {
-    const hasAccessTokenInStore = !!state.accessToken;
+    const hasAccessTokenInStore = !!accessToken;
     if (hasAccessTokenInStore) {
       setLoggedIn('loggedIn');
     } else {
@@ -65,12 +69,32 @@ export const useLoggedInSelector = (): LoggedIn => {
         dispatch({
           type: 'set-credentials',
           accessToken: persistedToken.accessToken,
+          invalidationTime: persistedToken.expireTime,
         });
       } else {
         setLoggedIn('notLoggedIn');
       }
     }
-  }, [state.accessToken, dispatch]);
+  }, [accessToken, dispatch]);
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout | undefined;
+    if (invalidationTime) {
+      const duration = invalidationTime - new Date().getTime();
+      if (duration > 0) {
+        timeout = setTimeout(() => {
+          setLoggedIn('expireToken');
+        }, duration);
+      } else {
+        setLoggedIn('expireToken');
+      }
+    }
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
+  }, [invalidationTime]);
 
   return loggedIn;
 };

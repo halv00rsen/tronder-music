@@ -14,6 +14,11 @@ const LoginUI = styled.div`
   margin: auto;
 `;
 
+const TimeoutError = styled.div`
+  color: red;
+  font-size: 130%;
+`;
+
 const ButtonRow = styled.div`
   margin: 1em;
 `;
@@ -36,8 +41,9 @@ export const Login = () => {
         setStateError(true);
       } else {
         appDispatch({
-          accessToken: spotifyParameters.accessToken,
           type: 'set-credentials',
+          accessToken: spotifyParameters.accessToken,
+          invalidationTime: spotifyParameters.expireTime,
         });
       }
     }
@@ -56,6 +62,12 @@ export const Login = () => {
   return (
     <LoginUI>
       <h1>Trønder Music</h1>
+      {loggedIn === 'expireToken' && (
+        <TimeoutError>
+          You have been logged out due to inactivity. Please log into Spotify
+          again to gain access.
+        </TimeoutError>
+      )}
       <div>To use this application, please login into Spotify.</div>
       <i>You will be redirected to Spotify login page.</i>
       <ButtonRow>

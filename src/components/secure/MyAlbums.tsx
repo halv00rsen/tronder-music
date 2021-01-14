@@ -6,6 +6,7 @@ export const MyAlbums = () => {
   const { instance, savedAlbums } = useSpotifyState();
   const dispatch = useSpotifyDispatch();
   const [fetching, setFetching] = useState(false);
+  const [hasFetched, setHasFetched] = useState(false);
 
   useEffect(() => {
     const loadAlbums = async () => {
@@ -16,11 +17,12 @@ export const MyAlbums = () => {
       });
       setFetching(false);
     };
-    if (!savedAlbums.length && !fetching) {
+    if (!savedAlbums.length && !fetching && !hasFetched) {
       setFetching(true);
+      setHasFetched(true);
       loadAlbums();
     }
-  }, [dispatch, instance, savedAlbums, fetching]);
+  }, [dispatch, instance, savedAlbums, fetching, hasFetched]);
 
   return (
     <div>
